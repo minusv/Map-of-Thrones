@@ -25,7 +25,6 @@ def add_post(request):
             return redirect('/discuss')
     else:
         context['form'] = Add_Post()
-    context["user"] = request.user.username
     return render(request,'Discuss/add_post.html',context)
 
 def register_user(request):
@@ -38,7 +37,9 @@ def register_user(request):
         password=form.cleaned_data.get("password")
         new_user=User.objects.create_user(username=username,email=None,password=password)
         new_user.save()
-        return redirect("/login")
+        authenticate(new_user)
+        login(request,new_user)
+        return redirect("/discuss")
     return render(request,'Discuss/register.html',context)
 
 def login_user(request):

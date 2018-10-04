@@ -38,7 +38,6 @@ def find_view_value(pk):
 # Main Landing page. Contains all the kingdom data.
 def home(request):
     data = storage_class().open('Geojson_data/kingdoms_data.json')
-    #data = open('static/Geojson_data/kingdoms_data.json')
     geodata = json.load(data)
     kingdoms=Kingdoms.objects.all()
 
@@ -171,5 +170,4 @@ def visit_kingdom(request,pk):
     kingdom_data.close()
 
     context["kingdom_note"] = kingdom_note
-
     return render(request,'Atlas/kingdom.html',context)

@@ -7,7 +7,7 @@ User = get_user_model()
 #Form for adding new post
 class Add_Post(forms.ModelForm):
     content = forms.CharField(label='Content',
-            widget=forms.TextInput(attrs={"class": "form-control","placeholder": "Enter text."}))
+            widget=forms.Textarea(attrs={"class": "form-control","placeholder": "Enter text."}))
     
     class Meta:
         model = Posts
