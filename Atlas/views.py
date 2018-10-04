@@ -32,7 +32,7 @@ def find_view_value(pk):
 
 # Main Landing page. Contains all the kingdom data.
 def home(request):
-    data = open('Geojson_data/kingdoms_data.json')
+    data = open('static/Geojson_data/kingdoms_data.json')
     geodata = json.load(data)
     kingdoms=Kingdoms.objects.all()
 
@@ -66,7 +66,7 @@ def visit_kingdom(request,pk):
     context["view_value"] = view_value
     context["kingdom_num"] = pk
     
-    location_data = open('Geojson_data/locations_data.json')
+    location_data = open('static/Geojson_data/locations_data.json')
     geodata = json.load(location_data)
 
     layer_format={
@@ -137,7 +137,7 @@ def visit_kingdom(request,pk):
     
     location_data.close()        
     
-    kingdom_data = open('Geojson_data/kingdoms_data.json')
+    kingdom_data = open('static/Geojson_data/kingdoms_data.json')
     geodata = json.load(kingdom_data)
 
     kingdoms = Kingdoms.objects.filter(id=pk)
