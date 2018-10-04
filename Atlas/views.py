@@ -7,6 +7,11 @@ from .models import Kingdoms, Locations
 import json
 from collections import defaultdict
 
+from django.conf import settings
+from django.core.files.storage import get_storage_class
+storage_class = get_storage_class(settings.STATICFILES_STORAGE)
+
+
 # Adjusting view of map as per the kingdom location
 def find_view_value(pk):
     if pk=="1":
@@ -32,7 +37,8 @@ def find_view_value(pk):
 
 # Main Landing page. Contains all the kingdom data.
 def home(request):
-    data = open('static/Geojson_data/kingdoms_data.json')
+    data = storage_class().open('Geojson_data/kingdoms_data.json')
+    #data = open('static/Geojson_data/kingdoms_data.json')
     geodata = json.load(data)
     kingdoms=Kingdoms.objects.all()
 
@@ -66,7 +72,8 @@ def visit_kingdom(request,pk):
     context["view_value"] = view_value
     context["kingdom_num"] = pk
     
-    location_data = open('static/Geojson_data/locations_data.json')
+    
+    location_data = storage_class().open('Geojson_data/locations_data.json')
     geodata = json.load(location_data)
 
     layer_format={
@@ -137,7 +144,7 @@ def visit_kingdom(request,pk):
     
     location_data.close()        
     
-    kingdom_data = open('static/Geojson_data/kingdoms_data.json')
+    kingdom_data = storage_class().open('Geojson_data/kingdoms_data.json')
     geodata = json.load(kingdom_data)
 
     kingdoms = Kingdoms.objects.filter(id=pk)
