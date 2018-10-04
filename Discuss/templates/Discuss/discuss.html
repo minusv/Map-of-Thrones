@@ -1,0 +1,34 @@
+{% extends 'Atlas/home.html' %}
+{% load staticfiles %}
+{% block title %}
+    Discuss
+{% endblock %}
+{% block card %}
+    <img class="card-img-top" src="{% static 'icons/got.jpg' %}" alt="Card image"
+        width='418' height='415'>
+    <div class="card-body bg-secondary">
+        <h4 class="card-title text-dark">Spoiler Alert!</h4>
+        <h5 class="card-title">
+            This is a place for GOT fanatics to enjoy and discuss theories and relevant plot points. 
+        </h5>
+    </div>
+{% endblock %}
+{% block footer %}
+    <div class="card-body bg-dark">    
+    {% for post in posts %}
+        <blockquote class="blockquote">
+            <h5>{{post.content}}</h5>
+            <footer class="blockquote-footer">{{post.author}}</footer>
+        </blockquote>
+        <hr>
+    {% endfor %}
+    <a href="/post" class="btn btn-primary">Add new post.</a>
+    </div>
+{% endblock %}
+{% block Script %}
+<script>
+    var gotmap=L.tileLayer('https://cartocdn-gusc.global.ssl.fastly.net//ramirocartodb/api/v1/map/named/tpl_756aec63_3adb_48b6_9d14_331c6cbc47cf/all/{z}/{x}/{y}.png', 
+    {crs: L.CRS.EPSG4326});
+    var mymap = L.map('mapid',{layers:[gotmap]}).setView([13, 25],4);
+</script>
+{% endblock %}

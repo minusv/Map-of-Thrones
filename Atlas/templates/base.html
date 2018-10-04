@@ -1,0 +1,119 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="{% static 'icons/city.png' %}">
+        <title>{% block title %}{% endblock %}</title>
+
+        <!--Leaflet CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+        <!--Leaflet JavaScript-->
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin="">
+        </script>
+        
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        
+        <!--Google Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+
+        <!--Fontawesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <style>
+            #mapid{ 
+                height: 100vh;
+                }
+        </style>
+    </head>
+    <body style="background-color: black; color:snow ;font-family: 'Acme', sans-serif">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <!--Navbar-->
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <a class="navbar-brand" href="/">Home</a>
+                    <ul class="navbar-nav">
+                        <!-- Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                Visit Kingdoms
+                            </a>
+                            <div class="dropdown-menu bg-secondary">
+                                <a class="dropdown-item" href="/1">Riverlands</a>
+                                <a class="dropdown-item" href="/2">Irons Islands</a>
+                                <a class="dropdown-item" href="/5">The North</a>
+                                <a class="dropdown-item" href="/6">Dorne</a>
+                                <a class="dropdown-item" href="/7">Stormlands</a>
+                                <a class="dropdown-item" href="/8">The Vale</a>
+                                <a class="dropdown-item" href="/9">The Westerlands</a>
+                                <a class="dropdown-item" href="/10">Crownsland</a>
+                                <a class="dropdown-item" href="/11">The Reach</a>
+                                <a class="dropdown-item" href="/3">Gift</a>
+                            </div>
+                        
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="/discuss">Discuss</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                Account
+                            </a>
+                            <div class="dropdown-menu bg-secondary">
+                                <a class="dropdown-item" href="/register">Sign-up</a>
+                                <a class="dropdown-item" href="/login">Login</a>
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </nav>
+                <div class="card bg-dark" style="width:419px; height:70vh ;">
+                    {% block card %}
+                    <img class="card-img-top" src="{% static 'icons/got2.jpg' %}" alt="Card image"
+                    width='418' height='415'>
+                    <div class="card-body bg-secondary">
+                        <h4 class="card-title text-dark">Welcome to Map of Thrones</h4>
+                        <h5 class="card-title">
+                            An interactive atlas of the kingdoms of Westeros.
+                        </h5>
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+            
+            <div id="mapid" class="col-sm-8"></div>
+        </div>
+        
+        {% block footer %}
+        <div class="row">
+        <div class="card-body bg-dark">
+            <h5 class="card-text">
+                Game of Thrones is an American medieval fantasy television series created for HBO by 
+                David Benioff and D. B. Weiss, featuring a predominantly British and Irish cast. 
+                The series is based on author George R. R. Martin's best-selling A Song of Ice and Fire 
+                series of seven planned fantasy novels, the first of which is A Game of Thrones.
+            </h5>
+            <a href="https://awoiaf.westeros.org/index.php/Game_of_Thrones" 
+                        class="btn btn-primary" target="_blank">A Wiki of Ice and Fire</a>
+            <br>
+            <br>
+            <h6 class="text-danger">Developed By <a href="https://github.com/minusv" target="_blank">minusv</a></h6>
+        </div>
+        </div>
+        {% endblock %}
+        </div>
+        {% block Script %}
+        {% endblock %}
+    </body>
+</html>

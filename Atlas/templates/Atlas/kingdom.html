@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} {{kingdom_note.name}} {% endblock %}
+{% block card %}
+    <br>
+    {% if kingdom_num == "1" %}
+    <img class="card-img-top" src="{% static 'icons/riverland.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "2" %}
+    <img class="card-img-top" src="{% static 'icons/iron.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "3" %}
+    <img class="card-img-top" src="{% static 'icons/gift1.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "5" %}
+    <img class="card-img-top" src="{% static 'icons/north.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "6" %}
+    <img class="card-img-top" src="{% static 'icons/dorne.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "7" %}
+    <img class="card-img-top" src="{% static 'icons/stormland1.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "8" %}
+    <img class="card-img-top" src="{% static 'icons/vale.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "9" %}
+    <img class="card-img-top" src="{% static 'icons/westerland1.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "10" %}
+    <img class="card-img-top" src="{% static 'icons/crownsland.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    {% if kingdom_num == "11" %}
+    <img class="card-img-top" src="{% static 'icons/reach.png' %}" alt="Card image"
+        width='419' height='415'>
+    {% endif %}
+    <div class="card-body bg-secondary">
+        <h3 class="card-title text-dark">{{kingdom_note.name}}</h3>
+        <h5 class="card-title">Claimed By  <span class="text-warning">{{kingdom_note.claimedby}} </span>
+            <i class="fas fa-angle-double-down"></i>
+        </h5>
+        
+    </div>
+{% endblock %}
+{% block footer %}
+<div class="row">
+    <div class="card-body bg-dark">
+        <h5 class="card-text">{{kingdom_note.summary}}</h5>
+        <a href="{{kingdom_note.awoiaf_url}}" class="btn btn-primary" target="_blank">A Wiki of Ice and Fire</a>
+    </div>
+</div>
+{% endblock %}
+{% block Script %}
+
+<script>
+    var castleIcon = L.icon({
+    iconUrl: "{% static 'icons/castle.svg' %}",
+    iconSize: [25, 30],
+    });
+
+    var cityIcon = L.icon({
+    iconUrl: "{% static 'icons/city.png' %}",
+    iconSize: [25, 30],
+    });
+
+    var landmarkIcon = L.icon({
+    iconUrl: "{% static 'icons/landmark.png' %}",
+    iconSize: [28, 30],
+    });
+
+    var regionIcon = L.icon({
+    iconUrl: "{% static 'icons/region.png' %}",
+    iconSize: [25, 25],
+    });
+
+    var ruinIcon = L.icon({
+    iconUrl: "{% static 'icons/ruin.png' %}",
+    iconSize: [25, 25],
+    });
+
+    var townIcon = L.icon({
+    iconUrl: "{% static 'icons/town.png' %}",
+    iconSize: [25, 30],
+    });
+
+
+    function onEachFeature(feature, layer) {
+        if (feature.properties.location_type && feature.properties.location_type==="Castle"){
+            layer.setIcon(castleIcon);
+        }
+        if (feature.properties.location_type && feature.properties.location_type==="City"){
+            layer.setIcon(cityIcon);
+        }
+        if (feature.properties.location_type && feature.properties.location_type==="Landmark"){
+            layer.setIcon(landmarkIcon);
+        }
+        if (feature.properties.location_type && feature.properties.location_type==="Region"){
+            layer.setIcon(regionIcon);
+        }
+        if (feature.properties.location_type && feature.properties.location_type==="Ruin"){
+            layer.setIcon(ruinIcon);
+        }
+        if (feature.properties.location_type && feature.properties.location_type==="Town"){
+            layer.setIcon(townIcon);
+        }
+
+        if (feature.properties && feature.properties.popupContent) {
+                layer.bindPopup(
+                    "<b>" + feature.properties.name + "</b> " + feature.properties.popupContent + "<br>" +
+                    "<a href='" + feature.properties.awoiaf_url + "' target='_blank'>AWOIAF</a>");
+            }
+        else {
+            layer.bindPopup(
+                "<b>" + feature.properties.name + "</b> " + "<br>" +
+                "<a href='" + feature.properties.awoiaf_url + "' target='_blank'>AWOIAF</a>");
+        }
+    }
+
+    
+
+    var gotmap=L.tileLayer('https://cartocdn-gusc.global.ssl.fastly.net//ramirocartodb/api/v1/map/named/tpl_756aec63_3adb_48b6_9d14_331c6cbc47cf/all/{z}/{x}/{y}.png', 
+    {crs: L.CRS.EPSG4326});
+    
+    var mymap = L.map('mapid',{layers:[gotmap]}).setView([{{view_value.0}}, {{view_value.1}}],{{view_value.2}});
+    
+    var kingdom = L.geoJson(
+        JSON.parse('{{kingdom_geodata}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+
+    {% if castles %}
+    var castles = L.geoJson(
+        JSON.parse('{{castles}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endif %}
+
+    {% if cities %}
+    var cities = L.geoJson(
+        JSON.parse('{{cities}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endif %}
+
+    {% if landmarks %}
+    var landmarks = L.geoJson(
+        JSON.parse('{{landmarks}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endif %}
+
+    {% if regions %}
+    var regions = L.geoJson(
+        JSON.parse('{{regions}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endif %}
+
+    {% if ruins %}
+    var ruins = L.geoJson(
+        JSON.parse('{{ruins}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endif %}
+
+    {% if towns %}
+    var towns = L.geoJson(
+        JSON.parse('{{towns}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endif %}
+
+    var baseMap = {
+        "{{kingdom_note.name}}" : kingdom
+    };
+
+    var overlayMaps = {
+        {% if castles %}" <img src='{% static 'icons/castle.svg' %}' alt='Icoin' width='25' height='25'> Castles": castles,{% endif %}
+        {% if cities %}" <img src='{% static 'icons/city.png' %}' alt='Icoin' width='25' height='25'> Cities": cities,{% endif %}
+        {% if landmarks %}" <img src='{% static 'icons/landmark.png' %}' alt='Icoin' width='25' height='25'> Landmarks": landmarks,{% endif %}
+        {% if regions %}" <img src='{% static 'icons/region.png' %}' alt='Icoin' width='21' height='21'> Regions": regions,{% endif %}
+        {% if ruins %}" <img src='{% static 'icons/ruin.png' %}' alt='Icoin' width='23' height='23'> Ruins": ruins,{% endif %}
+        {% if towns %}" <img src='{% static 'icons/town.png' %}' alt='Icoin' width='23' height='23'> Towns": towns,{% endif %}
+    };
+    
+    L.control.layers(baseMap,overlayMaps,{collapsed:false}).addTo(mymap);
+</script>
+{% endblock %}

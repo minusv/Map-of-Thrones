@@ -1,0 +1,24 @@
+{% extends 'Atlas/home.html' %}
+{% load staticfiles %}
+{% block title %}
+    Post
+{% endblock %}
+{% block card %}
+    <br>
+    <div class="container text-center">
+    <form class="form-signin" method="POST">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal">Post your views.</h1>
+        {{form.content}}
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Post</button>
+      </form>
+    </div>
+{% endblock %}
+{% block Script %}
+<script>
+    var gotmap=L.tileLayer('https://cartocdn-gusc.global.ssl.fastly.net//ramirocartodb/api/v1/map/named/tpl_756aec63_3adb_48b6_9d14_331c6cbc47cf/all/{z}/{x}/{y}.png', 
+    {crs: L.CRS.EPSG4326});
+    var mymap = L.map('mapid',{layers:[gotmap]}).setView([13, 25],4);
+</script>
+{% endblock %}

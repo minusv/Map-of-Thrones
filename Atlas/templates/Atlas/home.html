@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} Map of Thrones {% endblock %}
+{% block Script %}
+<script>
+    function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.popupContent) {
+            layer.bindPopup(
+                "<b>Claimed by </b>" + feature.properties.popupContent + "<br>" +
+                "<a href='" + feature.properties.id + "'>Visit</a>");
+        }
+    }
+
+    var gotmap=L.tileLayer('https://cartocdn-gusc.global.ssl.fastly.net//ramirocartodb/api/v1/map/named/tpl_756aec63_3adb_48b6_9d14_331c6cbc47cf/all/{z}/{x}/{y}.png', 
+    {crs: L.CRS.EPSG4326});
+    
+    var mymap = L.map('mapid',{layers:[gotmap]}).setView([13, 25],4);
+    
+    {% for key, value in context.items %}
+    var kingdom{{forloop.counter}} = L.geoJson(
+        JSON.parse('{{value}}'.replace(/&quot;/g, '"').replace(/&#39;/g, "")),
+        { onEachFeature: onEachFeature });
+    {% endfor %}
+
+    var overlayMaps = {
+        "Riverlands": kingdom1,
+        "Iron Islands": kingdom2,
+        "Gift": kingdom3,
+        "The North": kingdom4,
+        "Dorne": kingdom5,
+        "Stormlands": kingdom6,
+        "The Vale": kingdom7,
+        "The Westerlands": kingdom8,
+        "Crownsland": kingdom9,
+        "The Reach": kingdom10,
+    };
+    
+    L.control.layers(null,overlayMaps,{collapsed:false}).addTo(mymap);
+</script>
+{% endblock %}
