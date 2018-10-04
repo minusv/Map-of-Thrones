@@ -5,7 +5,7 @@ An interactive atlas of the kingdoms of Westeros. User can-
 
 The project is temporarily hosted [here](http://minusv.pythonanywhere.com/).
 
-## Deploying App
+## Deploying Project
 ### Cloning Repository
 Open terminal and run the command:
 ```
@@ -18,7 +18,6 @@ pip install -r requirements.txt
 ```
 ## Running App
 > Complete the following steps in the directory containing `manage.py`.
-### Running server
 Open terminal(virtualenv) and run the command:
 ```
 python manage.py runserver
