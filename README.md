@@ -3,7 +3,7 @@ An interactive atlas of the kingdoms of Westeros. User can-
 - Navigate to different kingdoms
 - Add posts in the discussion forum
 
-The project is temporarily hosted [here](http://minusv.pythonanywhere.com/).
+The project is hosted [here](http://minusv.pythonanywhere.com/).
 
 ## Deploying Project
 ### Cloning Repository
@@ -16,7 +16,7 @@ Open terminal(virtualenv) and run the following commands:
 ```
 pip install -r requirements.txt
 ```
-## Running App
+## Running Django
 > Complete the following steps in the directory containing `manage.py`.
 Open terminal(virtualenv) and run the command:
 ```
