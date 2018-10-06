@@ -1,9 +1,9 @@
 # Map of Thrones
-An interactive atlas of the kingdoms of Westeros. User can-
+An interactive geo-visualization of the kingdoms of Westeros using Leaflet. User can-
 - Navigate to different kingdoms
 - Add posts in the discussion forum
 
-The project is hosted [here](http://minusv.pythonanywhere.com/).
+[Visit Map of Thrones](http://minusv.pythonanywhere.com/).
 
 ## Deploying Project
 ### Cloning Repository
